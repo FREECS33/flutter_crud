@@ -22,3 +22,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+build:
+  commands:
+    - echo "Installing Flutter..."
+    - git clone https://github.com/flutter/flutter.git -b stable --depth 1
+    - export PATH="$PATH:`pwd`/flutter/bin"
+    - flutter doctor
+    - flutter pub get
+    - echo "Building Flutter Web app..."
+    - flutter config --enable-web
+    - flutter build web

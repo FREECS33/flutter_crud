@@ -11,15 +11,15 @@ class ModelListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Model List'),
-      ),
-      body: BlocProvider(
-        create: (context) => ModelCubit(
-          modelRepository: RepositoryProvider.of<ModelRepository>(context),
+    return BlocProvider(
+      create: (context) => ModelCubit(
+        modelRepository: RepositoryProvider.of<ModelRepository>(context),
+      )..fetchAllModels(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Model List'),
         ),
-        child: const ModelListScreen(),
+        body: const ModelListScreen(),
       ),
     );
   }
@@ -30,7 +30,7 @@ class ModelListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modelCubit = BlocProvider.of<ModelCubit>(context); //
+    final modelCubit = BlocProvider.of<ModelCubit>(context);
 
     return Column(
       children: [

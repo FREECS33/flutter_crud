@@ -5,17 +5,14 @@ import '../models/model.dart';
 class ModelRepository {
   final String apiUrl;
 
-  ModelRepository({required this.apiUrl
-  });
+  ModelRepository({required this.apiUrl});
 
   Future<void> createModel(Model model) async {
-    final response = await http.post(
-      Uri.parse('$apiUrl/post-model'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(model.toJson())
-    );
+    final response = await http.post(Uri.parse('$apiUrl/post-model'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(model.toJson()));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to create model');
@@ -25,8 +22,6 @@ class ModelRepository {
   Future<Model> getModel(int id) async {
     final response = await http.get(
       Uri.parse('$apiUrl/get-model/$id'),
-      headers: <String, String>{
-      },
     );
 
     if (response.statusCode == 200) {
@@ -51,13 +46,11 @@ class ModelRepository {
   }
 
   Future<void> deleteModel(int id) async {
-    final response = await http.delete(
-      Uri.parse('$apiUrl/delete-model'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(id)
-    );
+    final response = await http.delete(Uri.parse('$apiUrl/delete-model'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(id));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete model');
@@ -67,11 +60,12 @@ class ModelRepository {
   Future<List<Model>> getAllModels() async {
     final response = await http.get(
       Uri.parse('$apiUrl/get-models'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+      headers: {
+        'Content-Type': 'application/json',
       },
     );
     if (response.statusCode == 200) {
+      print(response);
       Iterable l = json.decode(response.body);
       return List<Model>.from(l.map((model) => Model.fromJson(model)));
     } else {
